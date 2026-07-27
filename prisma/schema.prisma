@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum Format {
+  DVD
+  BLURAY
+  UHD4K
+  HDDVD
+  VHS
+  OTHER
+}
+
+enum EditionType {
+  STANDARD
+  STEELBOOK
+  COLLECTOR
+  DIGIBOOK
+  LIMITED
+  OTHER
+}
+
+enum Condition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  POOR
+}
+
+
+model Movie {
+  id            String   @id @default(uuid())
+
+  title         String
+  originalTitle String?
+
+  year          Int?
+  imdbId        String?  @unique
+
+  runtime       Int?
+
+  director      String?
+  actors        String?
+
+  editions      PhysicalEdition[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model PhysicalEdition {
+  id            String   @id @default(uuid())
+
+  movieId       String
+  movie         Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  barcode       String? @unique
+
+  format        Format
+  editionType   EditionType @default(STANDARD)
+
+  country       String?
+  releaseDate   DateTime?
+
+  quantity      Int @default(1)
+
+  myMoviesId    Int?
+
+  coverUrl      String?
+  coverLocal    String?
+
+  purchaseDate  DateTime?
+  purchasePrice Decimal?
+
+  location      String?
+
+  condition     Condition?
+  notes         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

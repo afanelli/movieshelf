@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: movieshelf-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: movieshelf
+      POSTGRES_PASSWORD: movieshelf
+      POSTGRES_DB: movieshelf
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - movieshelf_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  movieshelf_postgres_data:

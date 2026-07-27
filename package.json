@@ -1,0 +1,28 @@
+{
+  "name": "movieshelf",
+  "version": "1.0.0",
+  "description": "web application for managing my personal movie collection",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afanelli/movieshelf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/afanelli/movieshelf/issues"
+  },
+  "homepage": "https://github.com/afanelli/movieshelf#readme",
+  "dependencies": {
+    "@prisma/client": "^7.9.0",
+    "prisma": "^7.9.0"
+  }
+}

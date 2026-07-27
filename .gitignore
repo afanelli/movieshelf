@@ -156,3 +156,5 @@ __pycache__/
 *.pyo
 .venv/
 venv/
+
+/generated/prisma
