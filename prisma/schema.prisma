@@ -54,6 +54,17 @@ model Movie {
   updatedAt     DateTime @updatedAt
 }
 
+model Collection {
+  id            String @id @default(uuid())
+
+  name          String
+  barcode       String?
+
+  editions      PhysicalEdition[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
 
 model PhysicalEdition {
   id            String   @id @default(uuid())
@@ -64,9 +75,16 @@ model PhysicalEdition {
   barcode       String?
   asin String?
 
+  collectionId String?
+  collection Collection? @relation(fields: [collectionId], references: [id])
+
   format        Format
   editionType   EditionType @default(STANDARD)
   editionTitle String?
+
+  // Gestione cofanetti
+  isBoxSet      Boolean @default(false)
+  collectionName String?
 
   country       String?
   releaseDate   DateTime?

@@ -10,7 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "import:mymovies": "tsx importer/src/index.ts",
     "generate": "prisma generate",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "scrape:covers": "tsx importer/scripts/scrape-covers.ts",
+    "import:covers": "tsx importer/src/import-covers.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
+    "cheerio": "^1.2.0",
     "csv-parser": "^3.2.1",
     "pg": "^8.22.0",
     "prisma": "^7.9.0"
