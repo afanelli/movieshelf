@@ -61,10 +61,12 @@ model PhysicalEdition {
   movieId       String
   movie         Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
-  barcode       String? @unique
+  barcode       String?
+  asin String?
 
   format        Format
   editionType   EditionType @default(STANDARD)
+  editionTitle String?
 
   country       String?
   releaseDate   DateTime?
