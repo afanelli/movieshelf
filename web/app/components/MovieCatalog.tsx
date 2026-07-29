@@ -22,10 +22,106 @@ export default function MovieCatalog({
 }: {
   movies: Movie[];
 }) {
+  
   const [view, setView] = useState<"grid" | "list">("grid");
+
+  const [search, setSearch] = useState("");
+  const [format, setFormat] = useState("ALL");
+  const [coverFilter, setCoverFilter] = useState("ALL");
+  const [sort, setSort] = useState("TITLE_ASC");
+
+  const filteredMovies = movies
+  .filter((movie) =>
+    movie.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  )
+  .filter((movie) => {
+    if (format === "ALL") return true;
+
+    return movie.editions.some(
+      (edition) => edition.format === format
+    );
+  })
+  .filter((movie) => {
+    if (coverFilter === "ALL") return true;
+
+    const hasCover = movie.editions.some(
+      (edition) => edition.coverUrl
+    );
+
+    return coverFilter === "WITH_COVER"
+      ? hasCover
+      : !hasCover;
+  })
+  .sort((a, b) => {
+    switch (sort) {
+      case "TITLE_DESC":
+        return b.title.localeCompare(a.title);
+
+      case "YEAR_DESC":
+        return (b.year ?? 0) - (a.year ?? 0);
+
+      case "YEAR_ASC":
+        return (a.year ?? 0) - (b.year ?? 0);
+
+      default:
+        return a.title.localeCompare(b.title);
+    }
+  });
 
   return (
     <>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+
+  <input
+    type="text"
+    placeholder="🔍 Cerca film..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="border rounded p-2"
+  />
+
+  <select
+    value={format}
+    onChange={(e) => setFormat(e.target.value)}
+    className="border rounded p-2"
+  >
+    <option value="ALL">Tutti i formati</option>
+    <option value="DVD">DVD</option>
+    <option value="BLURAY">Blu-ray</option>
+    <option value="UHD4K">4K UHD</option>
+  </select>
+
+
+  <select
+    value={coverFilter}
+    onChange={(e) => setCoverFilter(e.target.value)}
+    className="border rounded p-2"
+  >
+    <option value="ALL">Tutte le cover</option>
+    <option value="WITH_COVER">Con cover</option>
+    <option value="WITHOUT_COVER">Senza cover</option>
+  </select>
+
+
+  <select
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    className="border rounded p-2"
+  >
+    <option value="TITLE_ASC">Titolo A-Z</option>
+    <option value="TITLE_DESC">Titolo Z-A</option>
+    <option value="YEAR_DESC">Anno più recente</option>
+    <option value="YEAR_ASC">Anno più vecchio</option>
+  </select>
+
+</div>
+
+
+<p className="text-sm text-gray-500 mb-4">
+  Visualizzati: {filteredMovies.length} / {movies.length}
+</p>
       <div className="flex gap-2 mb-6">
         <button
           onClick={() => setView("grid")}
@@ -52,7 +148,7 @@ export default function MovieCatalog({
 
       {view === "grid" ? (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {movies.map((movie) => {
+          {filteredMovies.map((movie) => {
             const cover = movie.editions.find(
               (e) => e.coverUrl
             )?.coverUrl;
@@ -95,7 +191,7 @@ export default function MovieCatalog({
         </div>
       ) : (
         <div className="space-y-3">
-          {movies.map((movie) => {
+          {filteredMovies.map((movie) => {
             const cover = movie.editions.find(
               (e) => e.coverUrl
             )?.coverUrl;
