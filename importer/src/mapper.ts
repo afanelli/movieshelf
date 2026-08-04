@@ -31,7 +31,12 @@ export function mapMovie(row: MyMoviesRow) {
   return {
     title: row.title,
     year: row.year ? Number(row.year) : null,
-    imdbId: row.imdbId || null,
+    imdbId:
+      row.imdbId &&
+      /^tt\d{7,}$/.test(row.imdbId) &&
+      row.imdbId !== "tt0000000"
+        ? row.imdbId
+        : null,
     runtime: row.runtime ? Number(row.runtime) : null,
     director: row.director || null,
     actors: row.actors || null

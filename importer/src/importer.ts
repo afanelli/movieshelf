@@ -31,15 +31,28 @@ export async function importMovies(rows: MyMoviesRow[]) {
 
     // 1. Cerca o crea il film
     let movie = null;
-
-    if (movieData.imdbId) {
-
+    
+    // Cerca per IMDb solo se è un valore valido
+    if (
+      movieData.imdbId &&
+      /^tt\d{7,}$/.test(movieData.imdbId) &&
+      movieData.imdbId !== "tt0000000"
+    ) {
       movie = await prisma.movie.findUnique({
         where: {
-          imdbId: movieData.imdbId
-        }
+          imdbId: movieData.imdbId,
+        },
       });
-
+    }
+    
+    // Fallback: cerca per titolo + anno
+    if (!movie) {
+      movie = await prisma.movie.findFirst({
+        where: {
+          title: movieData.title,
+          year: movieData.year,
+        },
+      });
     }
 
 

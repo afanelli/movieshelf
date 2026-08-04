@@ -8,13 +8,17 @@ type Movie = {
   year: number | null;
   director: string | null;
   editions: {
-    id: string;
-    format: string;
-    barcode: string | null;
+  id: string;
+  format: string;
+  barcode: string | null;
+  coverUrl: string | null;
+  isBoxSet: boolean;
+  collectionName: string | null;
+  collection: {
+    name: string;
     coverUrl: string | null;
-    isBoxSet: boolean;
-    collectionName: string | null;
-  }[];
+  } | null;
+}[];
 };
 
 export default function MovieCatalog({
@@ -46,9 +50,12 @@ export default function MovieCatalog({
   .filter((movie) => {
     if (coverFilter === "ALL") return true;
 
-    const hasCover = movie.editions.some(
-      (edition) => edition.coverUrl
-    );
+    const hasCover =
+      movie.editions.some(
+        (edition) =>
+          edition.coverUrl ||
+          edition.collection?.coverUrl
+      );
 
     return coverFilter === "WITH_COVER"
       ? hasCover
@@ -149,9 +156,11 @@ export default function MovieCatalog({
       {view === "grid" ? (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {filteredMovies.map((movie) => {
-            const cover = movie.editions.find(
-              (e) => e.coverUrl
-            )?.coverUrl;
+            const cover =
+              movie.editions.find(e => e.coverUrl)?.coverUrl
+              ??
+              movie.editions.find(e => e.collection?.coverUrl)
+                ?.collection?.coverUrl;
 
             return (
               <div
@@ -192,9 +201,11 @@ export default function MovieCatalog({
       ) : (
         <div className="space-y-3">
           {filteredMovies.map((movie) => {
-            const cover = movie.editions.find(
-              (e) => e.coverUrl
-            )?.coverUrl;
+            const cover =
+              movie.editions.find(e => e.coverUrl)?.coverUrl
+              ??
+              movie.editions.find(e => e.collection?.coverUrl)
+                ?.collection?.coverUrl;
 
             return (
               <div

@@ -60,6 +60,8 @@ model Collection {
   name          String
   barcode       String?
 
+  coverUrl      String?
+
   editions      PhysicalEdition[]
 
   createdAt     DateTime @default(now())

@@ -12,7 +12,9 @@
     "generate": "prisma generate",
     "studio": "prisma studio",
     "scrape:covers": "tsx importer/scripts/scrape-covers.ts",
-    "import:covers": "tsx importer/src/import-covers.ts"
+    "import:covers": "tsx importer/src/import-covers.ts",
+    "check:import": "tsx importer/src/check-import.ts",
+    "check:covers": "tsx importer/src/import-covers.ts"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
     "cheerio": "^1.2.0",
+    "csv-parse": "^7.0.2",
     "csv-parser": "^3.2.1",
     "pg": "^8.22.0",
     "prisma": "^7.9.0"

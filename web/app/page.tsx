@@ -19,6 +19,13 @@ export default async function Home() {
           coverUrl: true,
           isBoxSet: true,
           collectionName: true,
+
+          collection: {
+            select: {
+              name: true,
+              coverUrl: true,
+            },
+          },
         },
       },
     },
