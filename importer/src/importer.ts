@@ -3,7 +3,7 @@ import {
   mapMovie,
   mapPhysicalEdition
 } from "./mapper";
-import { PrismaClient } from "@prisma/client";
+import type { MyMoviesRow } from "./csv-parser";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 
@@ -87,7 +87,6 @@ export async function importMovies(rows: MyMoviesRow[]) {
 
 
     if (existingEdition) {
-
       skippedEditions++;
 
       console.log(
@@ -103,7 +102,7 @@ export async function importMovies(rows: MyMoviesRow[]) {
     await prisma.physicalEdition.create({
       data: {
         movieId: movie.id,
-        ...editionData
+        ...editionData,
       }
     });
 

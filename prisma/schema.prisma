@@ -33,6 +33,10 @@ enum Condition {
   POOR
 }
 
+enum MediaType {
+  MOVIE
+  TV_SERIES
+}
 
 model Movie {
   id            String   @id @default(uuid())
@@ -47,6 +51,8 @@ model Movie {
 
   director      String?
   actors        String?
+
+  mediaType  MediaType @default(MOVIE)
 
   editions      PhysicalEdition[]
 
@@ -81,6 +87,7 @@ model PhysicalEdition {
   collection Collection? @relation(fields: [collectionId], references: [id])
 
   format        Format
+  seasonNumber   String?
   editionType   EditionType @default(STANDARD)
   editionTitle String?
 

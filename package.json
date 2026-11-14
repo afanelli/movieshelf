@@ -9,12 +9,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "import:mymovies": "tsx importer/src/index.ts",
+    "check:import": "tsx importer/src/check-import.ts",
     "generate": "prisma generate",
     "studio": "prisma studio",
+    "export:query": "tsx importer/src/export-query.ts",
+    "export:barcodes": "tsx importer/src/export-queries.ts",
     "scrape:covers": "tsx importer/scripts/scrape-covers.ts",
     "import:covers": "tsx importer/src/import-covers.ts",
-    "check:import": "tsx importer/src/check-import.ts",
-    "check:covers": "tsx importer/src/import-covers.ts"
+    "check:covers": "tsx importer/src/import-covers.ts",
+    "download:covers": "tsx importer/src/download-covers.ts"
   },
   "repository": {
     "type": "git",

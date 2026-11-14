@@ -1,6 +1,7 @@
-import { MyMoviesRow } from "./csv-parser";
+import type { Format } from "@prisma/client";
+import type { MyMoviesRow } from "./csv-parser";
 
-export function mapFormat(format: string) {
+export function mapFormat(format: string): Format {
   switch (format.toLowerCase()) {
     case "blu-ray":
       return "BLURAY";
